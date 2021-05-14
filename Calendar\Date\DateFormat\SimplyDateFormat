@@ -1,0 +1,108 @@
+package calendar;
+import java.util.Calendar;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+//DateFormat作用：2021-12-23 04:40:22     
+//df.format(Date date)
+
+//Calendar作用：可以查看日历、操作日历(加减)、时间比较；
+//实例化对象：getInstance() setTime(new Date())；
+//查看：get(Calendar.HOUR) getTime()  
+//操作：c.add(Calendar.HOUR,-3);
+//比较：c.compareTo(c2);
+//日历增减add+Calendar.HOUR;日历查看c.get+Calendar.HOUR;
+
+//Calendar-->Date-->DateFormat-->String
+//c.getTime\DF
+//c.getTime-->d-->df.format(d)-->String
+//d.getTime()得到时间戳(long,毫秒数，从GMT(greenwich mean time,1970-01-01 00:00:00)开始到现在的毫秒数)
+//d.toString()不需要重写
+//判断类的对象是否需要重写，直接输出该对象System.out.println(d);
+
+//注意：
+//DateFormat不能实例化对象，只能用SimpleDateFormat实例化
+//"yyyy-MM-dd HH:mm:ss"固定格式,否则出错******
+//输出DateFormat对象内容，使用format(new Date()),而不是使用toString();
+//Calendar对象：月的计数：0~11
+//Calendar比较，c1>c 1;c1<c -1;c1==c 0;
+//虽然设置回来，但c1和c的创建时间点不同
+
+public class UsageOfCalendar {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//DateFormat不能实例化对象，只能用SimpleDateFormat实例化
+		//"yyyy-MM-dd HH:mm:ss"固定格式,否则出错******
+		
+		String WholeT = df.format(new Date());
+		System.out.println("完整显示日期时间：");
+		System.out.println(WholeT);
+		//输出DateFormat对象内容，使用format(new Date()),而不是使用toString();
+		
+		
+		
+		Calendar c = Calendar.getInstance();
+		//Calendar类不能实例化对象，需要用类方法getInstance();
+		c.setTime(new Date());
+		//初始化
+		
+		System.out.println("年："+c.get(Calendar.YEAR));
+		System.out.println("月："+(c.get(Calendar.MONTH)+1));//****
+		System.out.println("日："+c.get(Calendar.DATE));
+		System.out.println("分钟："+c.get(Calendar.MINUTE));
+		System.out.println("今年的第 "+c.get(Calendar.DAY_OF_YEAR)+"天");
+		System.out.println("本月的第 "+c.get(Calendar.DAY_OF_MONTH)+"天");
+		//Calendar.MONTH (false), c.getTime().getYear() (false)
+		//获取年月日等：c.get(Calendar.YEAR);********
+		//月的计数：0~11
+		
+		c.add(Calendar.HOUR, +3);
+		System.out.println("三小时以后的时间： "+c.getTime());
+		//Calendar.HOUR****
+		String wTime1 = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(c.getTime());
+		System.out.println(wTime1);
+		c.add(Calendar.HOUR, -3);
+		String wTime2 = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(c.getTime());
+		System.out.println(wTime2);
+		
+		
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(new Date());
+		c1.add(Calendar.HOUR, +3);
+		
+		int i = c1.compareTo(c);
+		System.out.println("c1与c 的时间比较: "+i);
+		i = c.compareTo(c1);
+		System.out.println("c与c1 的时间比较: "+i);
+		//Calendar比较，c1>c 1;c1<c -1;c1==c 0;
+		c1.add(Calendar.HOUR, -3);
+		//设置回来
+		String wTime3 = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(c.getTime());
+		System.out.println(wTime3);
+		String wTime4 = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(c1.getTime());
+		System.out.println(wTime4);
+		i = c.compareTo(c1);
+		System.out.println("设置回来后的时间比较: "+i);//-1
+		//虽然设置回来，但c1和c的创建时间点不同
+	}
+
+}
+
+//完整显示日期时间：
+//2021-05-14 21:33:12
+//年：2021
+//月：5
+//日：14
+//分钟：33
+//今年的第 134天
+//本月的第 14天
+//三小时以后的时间： Sat May 15 00:33:12 CST 2021
+//2021-05-15 00:33:12
+//2021-05-14 21:33:12
+//c1与c 的时间比较: 1
+//c与c1 的时间比较: -1
+//2021-05-14 21:33:12
+//2021-05-14 21:33:12
+//设置回来后的时间比较: -1
