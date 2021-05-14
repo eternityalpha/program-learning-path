@@ -1,0 +1,55 @@
+public class Outer {
+	
+	public static void main(String[]args)
+	{
+		Outer.display(new Inner() {
+			
+			public String getName() {
+				
+				return "hello";
+			}
+			
+		});
+		
+	}
+	public static void display(Inner i)
+	{
+		System.out.println(i.getName());
+	}
+}
+interface Inner{
+	
+	String getName();
+}
+//作为函数参数
+
+
+public class Outer {
+
+	public Inner getInner(final String name,String city) {
+		
+		return new Inner() {
+			
+			String nick = name;
+			public String getName() {
+				return nick;
+			}
+			
+		};//anonymous class 
+	}//匿名内部类作为返回值
+	
+	
+	public static void main(String[]args)
+	{
+		Outer o = new Outer();
+		Inner i = o.getInner("mei", "hunan");
+		System.out.println(i.getName());
+	}
+	
+	
+}
+interface Inner{
+	
+	String getName();
+}
+//作为函数返回值
